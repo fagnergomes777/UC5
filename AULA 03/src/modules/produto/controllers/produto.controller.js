@@ -1,0 +1,108 @@
+import ProdutoModel from "../models/produto.model";
+
+class ProdutoController {
+  // Cadastra um novo produto
+  static cadastrar(requisicao, resposta) {
+    try {
+      const { id, nome, preco, descricao } = requisicao.body;
+      if (!id || !nome || !preco || !descricao) {
+        return resposta
+          .status(400)
+          .json({ mensagem: "Todos os campos são obrigatorios!" });
+      }
+      ProdutoModel.cadastrar(id, nome, preco, descricao);
+      resposta.status(201).json({ mensagem: "Produto criado com sucesso!" });
+    } catch (error) {
+      resposta.status(500).json({
+        mensagem: "Erro interno do servidor. Por favor tente mais tarde!",
+        erro: error.message,
+      });
+    }
+  }
+
+  // Lista todos os produtos
+  static listarTodos(requisicao, resposta) {
+    try {
+      const produtos = ProdutoModel.listarTodos();
+      if (produtos.length === 0) {
+        return resposta.status(200).json({ mensagem: "Banco de dados vazio!" });
+      }
+      resposta.status(200).json(produtos);
+    } catch (error) {
+      resposta.status(500).json({
+        mensagem: "Erro interno do servidor. Por favor tente mais tarde!",
+        erro: error.message,
+      });
+    }
+  }
+
+  // Lista um produto pelo ID
+  static listarPorId(requisicao, resposta) {
+    try {
+      const id = parseInt(requisicao.params.id);
+      const produto = ProdutoModel.listarPorId(id);
+      if (!produto) {
+        return resposta
+          .status(404)
+          .json({ mensagem: "Produto não encontrado!" });
+      }
+      resposta.status(200).json(produto);
+    } catch (error) {
+      resposta.status(500).json({
+        mensagem: "Erro interno do servidor. Por favor tente mais tarde!",
+        erro: error.message,
+      });
+    }
+  }
+
+  // Atualiza um produto pelo ID
+  static atualizar(requisicao, resposta) {
+    try {
+      const { novoNome, novoPreco, novaDescricao } = requisicao.body;
+      const id = parseInt(requisicao.params.id);
+      ProdutoModel.atualizar(id, novoNome, novoPreco, novaDescricao);
+      resposta.status(200).json({ mensagem: "Produto atualizado com sucesso" });
+    } catch (error) {
+      resposta.status(500).json({
+        mensagem: "Erro interno do servidor. Por favor tente mais tarde!",
+        erro: error.message,
+      });
+    }
+  }
+
+  // Deleta um produto pelo ID
+  static deletarPorId(requisicao, resposta) {
+    try {
+      const id = parseInt(requisicao.params.id);
+      const produto = ProdutoModel.deletarPorId(id); //455
+      if (produto === null) {
+        return resposta
+          .status(404)
+          .json({ mensagem: "Produto não encontrado!" });
+      }
+      resposta.status(200).json({ mensagem: "Produto excluido com sucesso!" });
+    } catch (error) {
+      resposta.status(500).json({
+        mensagem: "Erro interno do servidor. Por favor tente mais tarde!",
+        erro: error.message,
+      });
+    }
+  }
+
+  // Deleta todos os produtos
+  static deletarTodos(requisicao, resposta) {
+    try {
+      ProdutoModel.deletarTodos();
+      resposta
+        .status(200)
+        .json({ mensagem: "Todos os produtos foram deletados!" });
+    } catch (error) {
+      resposta.status(500).json({
+        mensagem: "Erro interno do servidor. Por favor tente mais tarde!",
+        erro: error.message,
+      });
+    }
+  }
+}
+
+export default ProdutoController;
