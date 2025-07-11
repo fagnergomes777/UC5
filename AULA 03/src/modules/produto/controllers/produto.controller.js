@@ -1,4 +1,4 @@
-import ProdutoModel from "../models/produto.model";
+import ProdutoModel from "../models/produto.model.js";
 
 class ProdutoController {
   // Cadastra um novo produto

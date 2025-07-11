@@ -1,5 +1,5 @@
 import express from "express";
-import ProdutoController from "../controllers/produto.controller";
+import ProdutoController from "../controllers/produto.controller.js";
 
 const router = express.Router();
 
@@ -16,9 +16,9 @@ router.post("/produto/cadastrar", ProdutoController.cadastrar);
 router.patch("/produto/atualizar/:id", ProdutoController.atualizar);
 
 // Deletar produto por id
-router.delete("/produto/deletar:id", ProdutoController.deletarPorId);
+router.delete("/produto/deletar/:id", ProdutoController.deletarPorId);
 
 // Deletar todos os produtos
-router.delete("/produtos", ProdutoController);
+router.delete("/produtos", ProdutoController.deletarTodos);
 
 export default router;
