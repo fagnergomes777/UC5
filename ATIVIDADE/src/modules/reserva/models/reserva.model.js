@@ -1,33 +1,41 @@
-import mongoose from "mongoose";
+import reservas from "../../../config/database.js";
 
-const reservaSchema = new mongoose.Schema({
-    id_reserva: {
-        type: Number,
-        required: true,
-        unique: true
-    },
-    nome_cliente: {
-        type: String,
-        required: true
-    },
-    numero_quarto: {
-        type: Number,
-        required: true
-    },
-    data_checkin: {
-        type: Date,
-        required: true
-    },
-    data_checkout: {
-        type: Date,
-        required: true
-    },
-    valor_reserva: {
-        type: Number,
-        required: true
-    }
-});
+class ReservaModel {
+  static cadastrar(id, cliente, quarto, dataEntrada, dataSaida) {
+    reservas.push({ id, cliente, quarto, dataEntrada, dataSaida });
+  }
 
-const Reserva = mongoose.model('Reserva', reservaSchema);
+  static listarTodas() {
+    return reservas.map(reserva => reserva);
+  }
 
-export default Reserva;
+  static listarPorId(id) {
+    return reservas.find(reserva => reserva.id === id);
+  }
+
+  static atualizar(id, novoCliente, novoQuarto, novaEntrada, novaSaida) {
+    const reserva = reservas.find(reserva => reserva.id === id);
+    if (!reserva) return null;
+
+    reserva.cliente = novoCliente || reserva.cliente;
+    reserva.quarto = novoQuarto || reserva.quarto;
+    reserva.dataEntrada = novaEntrada || reserva.dataEntrada;
+    reserva.dataSaida = novaSaida || reserva.dataSaida;
+
+    return reserva;
+  }
+
+  static deletarPorId(id) {
+    const index = reservas.findIndex(reserva => reserva.id === id);
+    if (index === -1) return null;
+
+    reservas.splice(index, 1);
+    return true;
+  }
+
+  static deletarTodas() {
+    reservas.length = 0;
+  }
+}
+
+export default ReservaModel;

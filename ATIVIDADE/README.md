@@ -1,63 +1,48 @@
-# Hotel Reservation System
-
-This project is a simple CRUD application for managing hotel reservations. It allows users to create, read, update, and delete reservations.
-
-## Project Structure
-
-```
+Estrutura do Projeto
 ATIVIDADE
 ├── src
-│   ├── config
-│   │   └── database.js          # Database configuration
-│   ├── modules
-│   │   └── reserva
-│   │       ├── controllers
-│   │       │   └── reserva.controller.js  # Controller for reservation operations
-│   │       ├── models
-│   │       │   └── reserva.model.js       # Reservation model schema
-│   │       └── routes
-│   │           └── reserva.route.js       # Routes for reservation operations
-│   └── index.js                     # Entry point of the application
-├── .env                             # Environment variables
-├── .env.example                     # Example of environment variables
-├── package.json                     # NPM configuration file
-├── package-lock.json                # Locked versions of dependencies
-├── README.md                        # Project documentation
-└── .gitignore                       # Files to ignore in Git
-```
+│   ├── config
+│   │   └── database.js          # Configuração do banco de dados
+│   ├── modules
+│   │   └── reserva
+│   │       ├── controllers
+│   │       │   └── reserva.controller.js  # Controlador para operações de reserva
+│   │       ├── models
+│   │       │   └── reserva.model.js       # Esquema do modelo de reserva
+│   │       └── routes
+│   │           └── reserva.route.js       # Rotas para operações de reserva
+│   └── index.js                     # Ponto de entrada da aplicação
+├── .env                             # Variáveis de ambiente
+├── .env.example                     # Exemplo de variáveis de ambiente
+├── package.json                     # Arquivo de configuração do NPM
+├── package-lock.json                # Versões bloqueadas das dependências
+├── README.md                        # Documentação do projeto
+└── .gitignore                       # Arquivos a serem ignorados no Git
+Instruções de Configuração
+Clone o repositório:
 
-## Setup Instructions
+git clone <url-do-repositorio>
+Navegue até o diretório do projeto:
 
-1. Clone the repository:
-   ```
-   git clone <repository-url>
-   ```
+cd ATIVIDADE
+Instale as dependências:
 
-2. Navigate to the project directory:
-   ```
-   cd ATIVIDADE
-   ```
+npm install
+Crie um arquivo .env baseado no arquivo .env.example e configure sua conexão com o banco de dados.
 
-3. Install the dependencies:
-   ```
-   npm install
-   ```
+Inicie a aplicação:
 
-4. Create a `.env` file based on the `.env.example` file and configure your database connection.
+npm start
+Uso
+Criar uma Reserva: Envie uma requisição POST para /reservas com os detalhes da reserva.
 
-5. Start the application:
-   ```
-   npm start
-   ```
+Obter Todas as Reservas: Envie uma requisição GET para /reservas.
 
-## Usage
+Obter uma Reserva por ID: Envie uma requisição GET para /reservas/:id.
 
-- **Create a Reservation**: Send a POST request to `/reservas` with reservation details.
-- **Get All Reservations**: Send a GET request to `/reservas`.
-- **Get a Reservation by ID**: Send a GET request to `/reservas/:id`.
-- **Update a Reservation**: Send a PUT request to `/reservas/:id` with updated details.
-- **Delete a Reservation**: Send a DELETE request to `/reservas/:id`.
+Atualizar uma Reserva: Envie uma requisição PUT para /reservas/:id com os detalhes atualizados.
 
-## License
+Excluir uma Reserva: Envie uma requisição DELETE para /reservas/:id.
 
-This project is licensed under the MIT License.
+Licença
+Este projeto está licenciado sob a Licença MIT.

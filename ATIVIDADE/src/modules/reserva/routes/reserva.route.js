@@ -1,13 +1,13 @@
-import { Router } from "express";
-import { ReservaController } from "../controllers/reserva.controller.js";
+import express from "express";
+import ReservaController from "../controllers/reserva.controller.js";
 
-const router = Router();
-const reservaController = new ReservaController();
+const router = express.Router();
 
-router.get("/reservas", (req, res) => reservaController.listar(req, res));
-router.get("/reservas/:id", (req, res) => reservaController.buscarPorId(req, res));
-router.post("/reservas", (req, res) => reservaController.criar(req, res));
-router.put("/reservas/:id", (req, res) => reservaController.atualizar(req, res));
-router.delete("/reservas/:id", (req, res) => reservaController.deletar(req, res));
+router.get("/reservas", ReservaController.listarTodas);
+router.get("/reservas/:id", ReservaController.listarPorId);
+router.post("/reserva/cadastrar", ReservaController.cadastrar);
+router.patch("/reserva/atualizar/:id", ReservaController.atualizar);
+router.delete("/reserva/deletar/:id", ReservaController.deletarPorId);
+router.delete("/reservas", ReservaController.deletarTodas);
 
 export default router;
