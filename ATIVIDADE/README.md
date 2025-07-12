@@ -1,48 +1,68 @@
-Estrutura do Projeto
-ATIVIDADE
-├── src
-│   ├── config
-│   │   └── database.js          # Configuração do banco de dados
-│   ├── modules
-│   │   └── reserva
-│   │       ├── controllers
-│   │       │   └── reserva.controller.js  # Controlador para operações de reserva
-│   │       ├── models
-│   │       │   └── reserva.model.js       # Esquema do modelo de reserva
-│   │       └── routes
-│   │           └── reserva.route.js       # Rotas para operações de reserva
-│   └── index.js                     # Ponto de entrada da aplicação
-├── .env                             # Variáveis de ambiente
-├── .env.example                     # Exemplo de variáveis de ambiente
-├── package.json                     # Arquivo de configuração do NPM
-├── package-lock.json                # Versões bloqueadas das dependências
-├── README.md                        # Documentação do projeto
-└── .gitignore                       # Arquivos a serem ignorados no Git
-Instruções de Configuração
-Clone o repositório:
+# Projeto: Sistema de Reservas de Hotel
 
-git clone <url-do-repositorio>
-Navegue até o diretório do projeto:
+Este é um projeto backend simples para gerenciamento de **reservas de hotel**, desenvolvido com **Node.js** e **Express**, seguindo o padrão **MVC modular** com banco de dados simulado em memória.
 
-cd ATIVIDADE
-Instale as dependências:
+## 📁 Estrutura de Pastas
 
+```
+src/
+├── config/
+│   └── database.js          # Banco de dados simulado (array)
+├── modules/
+│   └── reserva/
+│       ├── controllers/     # Lógica de negócio
+│       ├── models/          # Acesso e manipulação dos dados
+│       └── routes/          # Rotas da API
+docs/
+└── convencoes.md            # Guia de convenções do projeto
+index.js                     # Arquivo principal da aplicação
+.env                         # Configuração de porta e variáveis
+```
+
+## 🚀 Como Executar
+
+1. Clone o repositório:
+```bash
+git clone https://github.com/seu-usuario/reservas-hotel.git
+```
+
+2. Instale as dependências:
+```bash
 npm install
-Crie um arquivo .env baseado no arquivo .env.example e configure sua conexão com o banco de dados.
+```
 
-Inicie a aplicação:
+3. Configure a porta no arquivo `.env`:
+```env
+PORTA=3007
+```
 
+4. Inicie o servidor:
+```bash
 npm start
-Uso
-Criar uma Reserva: Envie uma requisição POST para /reservas com os detalhes da reserva.
+```
 
-Obter Todas as Reservas: Envie uma requisição GET para /reservas.
+A aplicação estará disponível em:  
+[http://localhost:3007](http://localhost:3007)
 
-Obter uma Reserva por ID: Envie uma requisição GET para /reservas/:id.
+## 📌 Endpoints Disponíveis
 
-Atualizar uma Reserva: Envie uma requisição PUT para /reservas/:id com os detalhes atualizados.
+- `GET /reservas` – Lista todas as reservas
+- `GET /reservas/:id` – Retorna uma reserva por ID
+- `POST /reserva/cadastrar` – Cadastra nova reserva
+- `PATCH /reserva/atualizar/:id` – Atualiza uma reserva
+- `DELETE /reserva/deletar/:id` – Deleta reserva específica
+- `DELETE /reservas` – Deleta todas as reservas
 
-Excluir uma Reserva: Envie uma requisição DELETE para /reservas/:id.
+## 📄 Convenções
 
-Licença
-Este projeto está licenciado sob a Licença MIT.
+O projeto segue as diretrizes descritas em [`docs/convenções.md`](./docs/convenções.md).
+
+## 🛠 Tecnologias Utilizadas
+
+- Node.js
+- Express
+- dotenv
+
+---
+
+Desenvolvido para fins educacionais.
