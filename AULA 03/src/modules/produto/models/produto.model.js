@@ -1,34 +1,55 @@
-import produtos from "../../../config/database.js";
+import client from "../../../config/database.js";
 
 class ProdutoModel {
-  static cadastrar(id, nome, preco, descricao) {
-    produtos.push({ id, nome, preco, descricao });
+  static async cadastrar(nome, preco, descricao) {
+    const dados = [nome, preco, descricao];
+    const consulta = `
+      insert into produto(nome, preco, descricao)
+      values ($1, $2, $3) returning *;
+    `;
+    const resultado = await client.query(consulta, dados);
+    return resultado.rows;
   }
-  static listarTodos() {
-    const produto = produtos.map((produto) => produto);
-    return produto;
+
+  static async listarTodos() {
+    const consulta = `select * from produto`;
+    const resultado = await client.query(consulta);
+    return resultado.rows;
   }
-  static listarPorId(id) {
-    const produto = produtos.find((produto) => produto.id === id);
-    return produto;
+
+  static async listarPorId(id) {
+    const dados = [id];
+    const consulta = `select * from produto where id = $1`;
+    const resultado = await client.query(consulta, dados);
+    return resultado.rows;
   }
-  static atualizar(id, novoNome, novoPreco, novaDescricao) {
-    const produto = produtos.find((produto) => produto.id === id);
-    produto.nome = novoNome || produto.nome;
-    produto.preco = novoPreco || produto.preco;
-    produto.descricao = novaDescricao || produto.descricao;
-    return produto
+
+  static async atualizar(id, nome, preco, descricao) {
+    const dados = [nome, preco, descricao, id];
+    const consulta = `
+      update produto set nome = $1, preco = $2, descricao = $3
+      where id = $4 returning *;
+    `;
+    const resultado = await client.query(consulta, dados);
+    return resultado.rows;
   }
-  static deletarPorId(id) {
-    const index = produtos.findIndex(produto => produto.id === id)
-    if(index === -1){
-        return null
-    }
-    produtos.splice(index, 1)
-    return true
+
+  static async deletarPorId(id) {
+    const dados = [id];
+    const consulta = `delete from produto where id = $1 returning *`;
+    const resultado = await client.query(consulta, dados);
+    return resultado.rows;
   }
-  static deletarTodos() {
-    produtos.length = 0;
+
+  static async deletarTodos() {
+    const consulta = `delete from produto`;
+    await client.query(consulta);
+  }
+
+  static async totalProdutos() {
+    const consulta = `select count(id) as total from produto`;
+    const resultado = await client.query(consulta);
+    return resultado.rows;
   }
 }
 

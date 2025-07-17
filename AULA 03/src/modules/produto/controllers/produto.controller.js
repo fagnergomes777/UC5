@@ -4,13 +4,13 @@ class ProdutoController {
   // Cadastra um novo produto
   static cadastrar(requisicao, resposta) {
     try {
-      const { id, nome, preco, descricao } = requisicao.body;
-      if (!id || !nome || !preco || !descricao) {
+      const { nome, preco, descricao } = requisicao.body;
+      if (!nome || !preco || !descricao) {
         return resposta
           .status(400)
           .json({ mensagem: "Todos os campos são obrigatorios!" });
       }
-      ProdutoModel.cadastrar(id, nome, preco, descricao);
+      ProdutoModel.cadastrar(nome, preco, descricao);
       resposta.status(201).json({ mensagem: "Produto criado com sucesso!" });
     } catch (error) {
       resposta.status(500).json({
@@ -60,7 +60,12 @@ class ProdutoController {
     try {
       const { novoNome, novoPreco, novaDescricao } = requisicao.body;
       const id = parseInt(requisicao.params.id);
-      ProdutoModel.atualizar(id, novoNome, novoPreco, novaDescricao);
+      const produto = ProdutoModel.atualizar(id, novoNome, novoPreco, novaDescricao);
+      if (!produto) {
+        return resposta
+          .status(404)
+          .json({ mensagem: "Produto não encontrado!" });
+      }
       resposta.status(200).json({ mensagem: "Produto atualizado com sucesso" });
     } catch (error) {
       resposta.status(500).json({
@@ -74,13 +79,16 @@ class ProdutoController {
   static deletarPorId(requisicao, resposta) {
     try {
       const id = parseInt(requisicao.params.id);
-      const produto = ProdutoModel.deletarPorId(id); //455
+      const produto = ProdutoModel.deletarPorId(id); 
       if (produto === null) {
         return resposta
           .status(404)
           .json({ mensagem: "Produto não encontrado!" });
       }
-      resposta.status(200).json({ mensagem: "Produto excluido com sucesso!" });
+      resposta.status(200).json({ 
+        mensagem: "Produto excluido com sucesso!", 
+        produtoExcluido: produto 
+      });
     } catch (error) {
       resposta.status(500).json({
         mensagem: "Erro interno do servidor. Por favor tente mais tarde!",
