@@ -1,7 +1,8 @@
 import express from "express"
 import dotenv from "dotenv"
 import routeProduto  from "./src/modules/produto/routes/produto.route.js"
-import "./src/config/criartabela.js"
+import sequelize from "./src/config/database.js"
+// import "./src/config/criartabela.js"
 
 
 dotenv.config()
